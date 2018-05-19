@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ai_ue1</name>
+	<name>AICar1</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,16 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>native</name>
-			<type>2</type>
-			<location>C:/Users/Baum/Documents/HTW/AI/UE1/ai-libs/native</location>
-		</link>
-		<link>
-			<name>src/s0555950/car.png</name>
-			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/UE1/car.png</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
