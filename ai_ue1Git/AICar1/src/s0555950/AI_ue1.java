@@ -5,6 +5,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+import org.w3c.dom.css.Rect;
+
 import lenz.htw.ai4g.ai.AI;
 import lenz.htw.ai4g.ai.DriverAction;
 import lenz.htw.ai4g.ai.Info;
@@ -13,6 +16,8 @@ public class AI_ue1 extends AI {
 	float turningTemp=0;
 	float gas, turning, xCar,yCar,xGoal,yGoal;
 	List<Polygon> allObst = new ArrayList<Polygon>();
+	Rectangle[][] mapGrit = new Rectangle[info.getTrack().getWidth()/10][info.getTrack().getHeight()/10];
+	int[][] theWay = new int[info.getTrack().getWidth()/10][info.getTrack().getHeight()/10];
 
 	public AI_ue1(Info info) {
 		super(info);
@@ -21,8 +26,9 @@ public class AI_ue1 extends AI {
 		for (Polygon obst : info.getTrack().getObstacles()) {
 			allObst.add(obst);
 		}
-		//info gives lots of informations about position/ velocity/ etc
-		// TODO Auto-generated constructor stub
+		gridItUp(10);
+		
+		
 	}
 
 	@Override
@@ -40,12 +46,7 @@ public class AI_ue1 extends AI {
 		yCar = info.getY();
 		xGoal = info.getCurrentCheckpoint().x;
 		yGoal = info.getCurrentCheckpoint().y;
-		
-		
-		if(arg0 = true){
-			//System.out.println("reset");
-		}
-
+	
 		
 		//turning to target
 		turningTemp= -1* (info.getOrientation()- findTarget());
@@ -96,6 +97,38 @@ public class AI_ue1 extends AI {
 		return new DriverAction(gas, turning);	
 	}
 	
+	public void getTheWay (){
+		
+		
+	}
+	
+	//public void 
+	
+	
+	public void gridItUp(int rectSize){
+	
+		for (int i = 0; i <= info.getTrack().getWidth()-rectSize; i += rectSize) {
+			for (int j = 0; j <= info.getTrack().getHeight()-rectSize; j += rectSize) {
+				
+				 boolean intersect= false;
+				 Rectangle	freeRect = new Rectangle(i, j, rectSize, rectSize);		
+
+				
+				 for (Polygon pol : allObst) {
+					if (pol.intersects(freeRect)){
+						intersect= true;
+						//System.out.println(freeRect);
+						break;
+					}
+				 }
+				 if(!intersect){
+					 mapGrit[i/10][j/10]= freeRect;
+					 
+				 } 
+				
+			}
+		}
+	}
 	
 	public float getDistance(){
 		float ret=0;
@@ -134,7 +167,7 @@ public class AI_ue1 extends AI {
 			
 			if(frontCheck && !leftCheck && !rightCheck){
 				
-				System.out.println("intersec straight");
+				//System.out.println("intersec straight");
 				if(info.getOrientation() >= Math.PI/2 || info.getOrientation() <= -Math.PI/2 ){
 					ret = -1;					
 				}else
@@ -142,16 +175,16 @@ public class AI_ue1 extends AI {
 			}
 			 
 			if (leftCheck){
-				System.out.println("intersec Left");
+				//System.out.println("intersec Left");
 				ret = 1; 
 			}
 			 
 			if (rightCheck){
-				System.out.println("intersec Right");
+				//System.out.println("intersec Right");
 				ret = -1;
 			}
 			if (rightCheck && leftCheck && !frontCheck){
-				System.out.println("intersec Right/left");
+				//System.out.println("intersec Right/left");
 				ret = 0;
 			}
 		}
