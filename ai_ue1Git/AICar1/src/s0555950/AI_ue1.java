@@ -21,7 +21,7 @@ public class AI_ue1 extends AI {
 
 	public AI_ue1(Info info) {
 		super(info);
-		//enlistForDevelopment();
+	
 		enlistForTournament(555950);
 		for (Polygon obst : info.getTrack().getObstacles()) {
 			allObst.add(obst);
